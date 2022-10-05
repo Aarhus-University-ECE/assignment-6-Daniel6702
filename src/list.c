@@ -22,27 +22,48 @@ void add(node *head, int x){
 }
 
 int size(node *l){
-    // Excercise 3b)
-    // Add your code here... 
-
-    return -1;
+    assert(l!=NULL); //Precondition
+    int size = 0;
+    while (l->next != NULL) { //loops through array until 'next' value is NULL
+        size++;  //increment size with each iteration
+        l = l->next; //the current node of list becomes the next node
+    }
+    return size;
 }
 
 void printout(node *l) {
-  /*Excercise 3d) Implement your changes.. 
-    pre: head points to the first, empty element. The last element's next is NULL
-    post: the values of the list are printed out*/
-    node *p = l->next;
-    while (p!=NULL){
-      printf("%d, ",p->data);
+    node *p = l->next; //skips first empty element 
+    while (p != NULL) { //loops until empty element is found
+        printf("\%d, ",p->data); //prints data
+        p = p->next; //points to the next element in list
     }
     printf("\n");
 }
 
-int largest(node *l){
-    /*Excercise 3e) Add your code below.
-      pre: head points to the first, empty element. The last element's next is NULL. size(l>0)
-      post: returns the largest value of the list*/
-    return -1; 
+int largest(node *l) {
+    int max = l->next->data; //skips first empty element -> gets data next
+    while (l->next != NULL) { //loops until empty element is found
+        l = l -> next; //points to the next element in list
+        (l->data > max) && (max = l->data); //if value at l->data is > max, its becomes new max 
+    } 
+    return max;
 }
 
+int main(void) {
+    node *list = malloc(sizeof(node));
+    list->next = NULL; /*create first, empty element*/
+    add(list,1);
+    add(list,3);
+    add(list,2);
+    add(list,5);
+    add(list,4);
+    add(list,6);
+    add(list,3);
+    add(list,1);
+    add(list,2);
+
+    printf("size: %d\n",size(list));
+    printf("largest: %d\n",largest(list));
+    printout(list);
+    return 0;
+}
